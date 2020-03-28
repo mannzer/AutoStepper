@@ -13,19 +13,21 @@ import org.jsoup.select.Elements;
 public class GoogleImageSearch {
 		
     public static void FindAndSaveImage(String question, String destination) {
-        String ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0";
+        String ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36";
+		// String ua = "AutoStepper";
         String finRes = "";
 
         try {
-            String googleUrl = "https://www.google.com/search?as_st=y&tbm=isch&as_q=" + question.replace(",", "+").replace(" ", "+") + "&as_epq=&as_oq=&as_eq=&cr=&as_sitesearch=&safe=images&tbs=isz:lt,islt:vga,iar:w";
+            String googleUrl = "https://duckduckgo.com/?q=" + question.replace(",", "+").replace(" ", "+") + "&iaf=size%3ALarge%2Clayout%3AWide&iax=images&ia=images";
             Document doc1 = Jsoup.connect(googleUrl).userAgent(ua).timeout(8 * 1000).get();
-            Elements elems = doc1.select("[data-src]");
+            Elements elems = doc1.select("img[src]");
             if( elems.isEmpty() ) {
                 System.out.println("Couldn't find any images for: " + question);
+                System.out.println(googleUrl);
                 return;
             }
             Element media = elems.first();
-            String finUrl = media.attr("abs:data-src"); 
+            String finUrl = media.attr("abs:src"); 
             saveImage(finUrl.replace("&quot", ""), destination);
         } catch (Exception e) {
             System.out.println(e);

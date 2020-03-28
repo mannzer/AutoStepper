@@ -397,7 +397,7 @@ public class AutoStepper {
         float kickStartTime = getBestOffset(timePerBeat, fewTimes[KICKS], 0.01f);
         startTimes.add(kickStartTime);
         startTimes.add(kickStartTime);
-        startTime = -getMostCommon(startTimes, 0.02f, false);            
+        startTime = -(getMostCommon(startTimes, 0.02f, false) + (timePerBeat * BPM / 6));
       }
       System.out.println("Time per beat: " + timePerBeat + ", BPM: " + BPM);
       System.out.println("Start Time: " + startTime);
